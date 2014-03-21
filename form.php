@@ -9,18 +9,18 @@ function print_form(){
 	<form method="post" action="<?php echo $_SERVER['PHP_SELF'];?>" id="uploadform" enctype="multipart/form-data">
 	
 	<p><label for="emailfrom">Sender <span class="required">*</span></label>
-	<input name="emailfrom" id="emailfrom" type="text" class="field" value="<?= $_SESSION['myForm']['emailfrom']; ?>" tabindex="1"/></p>
+	<input name="emailfrom" id="emailfrom" type="text" class="field" value="<?= $_SESSION['bpForm']['emailfrom']; ?>" tabindex="1"/></p>
 	
 	<p><label for="recipient">Recipient <span class="required">*</span></label>
-	<input name="recipient" id="recipient" type="text" class="field" value="<?= $_SESSION['myForm']['recipient']; ?>" tabindex="2"/></p>
+	<input name="recipient" id="recipient" type="text" class="field" value="<?= $_SESSION['bpForm']['recipient']; ?>" tabindex="2"/></p>
 
   <!-- remove subject line (may be useful later)
 	<p><label for="subject">Subject <span class="required">*</span></label>
-	<input name="subject" id="subject" type="text" class="field" value="<?= $_SESSION['myForm']['subject']; ?>" tabindex="3"/></p>
+	<input name="subject" id="subject" type="text" class="field" value="<?= $_SESSION['bpForm']['subject']; ?>" tabindex="3"/></p>
   -->	
 
 	<p><label for="comments">Message <span class="required">*</span></label>
-	<textarea name="comments" id="comments" rows="7" cols="10" class="field" tabindex="4"><?= $_SESSION['myForm']['comments']; ?></textarea></p>
+	<textarea name="comments" id="comments" rows="7" cols="10" class="field" tabindex="4"><?= $_SESSION['bpForm']['comments']; ?></textarea></p>
 	
   <!-- remove mms image uploads for now
   <p><label for="attachment">File Upload<br />(1 file only, max file size 1024kb.)</label>
@@ -45,15 +45,14 @@ function process_form() {
 	$comments = stripslashes($_POST['comments']);
 	
 	// Allowed file types. add file extensions WITHOUT the dot.
-	$allowtypes=array("zip", "rar", "doc", "pdf", "png", "jpg", "gif");
-	
+	//$allowtypes=array("zip", "rar", "doc", "pdf", "png", "jpg", "gif");
+  $allowtypes=array("jpg","jpeg","png","gif");	
+
 	// Require a file to be attached: false = Do not allow attachments true = allow only 1 file to be attached
-	$requirefile="true";
+	$requirefile="false";
 	
-	// Maximum file size for attachments in KB NOT Bytes for simplicity. MAKE SURE your php.ini can handel it,
-	// post_max_size, upload_max_filesize, file_uploads, max_execution_time!
-	// 2048kb = 2MB,       1024kb = 1MB,     512kb = 1/2MB etc..
-	$max_file_size="1024";
+	// Maximum file size for attachments in KB (not bytes)
+	$max_file_size="2048";
 	
 	// Thank you message
 	$thanksmessage="Thank you for submitting your incident report! Your house-level managers have been notified via SMS.";
@@ -152,7 +151,7 @@ function process_form() {
 			exit("Mail could not be sent. Sorry! An error has occurred, please report this to caznm@bsc.coop\n");
 		} else {
 			echo '<div id="formfeedback"><h3>Great Success</h3><p>'. $thanksmessage .'</p></div>';
-			unset($_SESSION['myForm']);
+			unset($_SESSION['bpForm']);
 			print_form();
 			
 		} // end of if !mail
