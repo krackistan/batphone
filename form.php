@@ -5,22 +5,24 @@ session_start();
 // prints form
 function print_form(){
 ?>
-<p><span class="required">*</span> Required fields</p>
+
+<?php echo $contacts; ?>
+<p>
 	<form method="post" action="<?php echo $_SERVER['PHP_SELF'];?>" id="uploadform" enctype="multipart/form-data">
 	
-	<p><label for="emailfrom">Sender <span class="required">*</span></label>
-	<input name="emailfrom" id="emailfrom" type="text" class="field" value="<?= $_SESSION['bpForm']['emailfrom']; ?>" tabindex="1"/></p>
-	
-	<p><label for="recipient">Recipient <span class="required">*</span></label>
-	<input name="recipient" id="recipient" type="text" class="field" value="<?= $_SESSION['bpForm']['recipient']; ?>" tabindex="2"/></p>
+	<input name="emailfrom" id="emailfrom" type="hidden" value="batphone@casa-z.org"/></p>
+  
+  <!-- remove recipients field, autopopulated from db	
+	<p><label for="recipient">Recipient</span></label>
+	<input name="recipient" id="recipient" type="text" class="field" value="<?php echo $contacts; ?>" tabindex="1"/></p>
+  -->
 
   <!-- remove subject line (may be useful later)
 	<p><label for="subject">Subject <span class="required">*</span></label>
 	<input name="subject" id="subject" type="text" class="field" value="<?= $_SESSION['bpForm']['subject']; ?>" tabindex="3"/></p>
   -->	
 
-	<p><label for="comments">Message <span class="required">*</span></label>
-	<textarea name="comments" id="comments" rows="7" cols="10" class="field" tabindex="4"><?= $_SESSION['bpForm']['comments']; ?></textarea></p>
+	<textarea name="comments" id="comments" rows="7" cols="10" class="field" tabindex="2" placeholder="Enter your message here"><?= $_SESSION['bpForm']['comments']; ?></textarea></p>
 	
   <!-- remove mms image uploads for now
   <p><label for="attachment">File Upload<br />(1 file only, max file size 1024kb.)</label>
@@ -33,22 +35,44 @@ function print_form(){
 <?php
 }
 
+
 // enquiry form validation
+
 
 function process_form() {
 	// Read POST request params into global vars
 	// FILL IN YOUR EMAIL
-	$to = trim($_POST['recipient']);
+	//$to = trim($_POST['recipient']);
 	//$subject = trim($_POST['subject']);
-	$recipient = trim($_POST['recipient']);
-	$emailfrom = trim($_POST['emailfrom']);
+	//$to = $contacts;
+  //$recipient = $contacts;
+  //$recipient = trim($_POST['recipient']);
+	$to = '';
+  $emailfrom = trim($_POST['emailfrom']);
 	$comments = stripslashes($_POST['comments']);
 	
-	// Allowed file types. add file extensions WITHOUT the dot.
+
+  // Create connection
+  $con=mysqli_connect("mysql","tones","GmQS8JeKfY2jBCCa","tones");
+  // Check connection
+  if (mysqli_connect_errno())
+  {  
+    echo "Failed to connect to MySQL: " . mysqli_connect_error();
+  }  
+
+  $result = mysqli_query($con,"SELECT phone,domain FROM batphone_contacts");
+
+  while($row = mysqli_fetch_array($result)) {
+    $to .=  $row['phone'] . "@" .  $row['domain'] . ", ";  
+  }
+
+  mysqli_close($con);
+
+	// Allowed file types
 	//$allowtypes=array("zip", "rar", "doc", "pdf", "png", "jpg", "gif");
   $allowtypes=array("jpg","jpeg","png","gif");	
 
-	// Require a file to be attached: false = Do not allow attachments true = allow only 1 file to be attached
+	// Require a file to be attached
 	$requirefile="false";
 	
 	// Maximum file size for attachments in KB (not bytes)
@@ -59,10 +83,10 @@ function process_form() {
 
 	$errors = array(); //Initialize error array
 
-	//checks for a name
-	if (empty($_POST['recipient']) ) {
-		$errors[]='You forgot to enter the recipient address';
-		}
+	//recipient non empty
+	//if (empty($_POST['recipient']) ) {
+	//	$errors[]='You forgot to enter the recipient address';
+	//	}
 
 	//checks for a subject
 	//if (empty($_POST['subject']) ) {
@@ -148,16 +172,16 @@ function process_form() {
 
 		
 		if(!mail($to,$subject,$message,$headers,"-femail@domain.com")) {
-			exit("Mail could not be sent. Sorry! An error has occurred, please report this to caznm@bsc.coop\n");
+			exit("Message could not be sent. Sorry! An error has occurred, please report this to caznm@bsc.coop\n");
 		} else {
-			echo '<div id="formfeedback"><h3>Great Success</h3><p>'. $thanksmessage .'</p></div>';
+			echo '<div class="formfeedback"><h3>Tight.</h3><p>'. $thanksmessage .'</p></div>';
 			unset($_SESSION['bpForm']);
 			print_form();
 			
 		} // end of if !mail
 		
 	} else { //report the errors
-		echo '<div id="formfeedback"><h3>Error!</h3><p>The following error(s) have occured:<br />';
+		echo '<div class="formfeedback"><h3>Error!</h3><p>The following error(s) have occured:<br />';
 		foreach ($errors as $msg) { //prints each error
 				echo " - $msg<br />\n";
 			} // end of foreach

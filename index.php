@@ -19,21 +19,31 @@ $_SESSION['myForm'] = $_POST;
   <link href="main.css" rel="stylesheet"> 
 </head>
 <body>
-	
-	<h1>Batphone</h1>
-	<div id="uploadform">
-	<?php
-	// contact form
-	if (isset($_POST['submitted']) && ('true' == $_POST['submitted'])) { 
-		// checks if the form is submitted and then processes it
-    	process_form(); 
+  <div class="wrapper">
+	  <div class="form-header">
+      <h1>BatPhone</h1>
+	  </div>
+    <div class="report-form">
+	  <?php
+	  // contact form
+	  if (isset($_POST['submitted']) && ('true' == $_POST['submitted'])) { 
+		  // checks if the form is submitted and then processes it
+    	  process_form(); 
 		
-	} else { 
-		// else prints the form
-    	print_form(); 
-	}
-	?>
-	</div>
+	  } else { 
+		  // else prints the form
+    	  print_form(); 
+	  }
+	  ?>
+  </div>	
+</div>
+<div class="footer">
+  <span class="blurb">BatPhone is a web interface for contacting house level managers at Casa Zimbabwe via SMS.</span>
+  <br>
+  <a href="https://github.com/krackistan/batphone">Source</a>
+  <a href="https://github.com/krackistan/batphone/issues">Bug Reports</a>
+  <a href="mailto:tc@ischool.berkeley.edu">Help</a>
+</div>
 </body>
 </html>
 <?php session_destroy(); //unset session data ?>

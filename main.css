@@ -1,0 +1,97 @@
+@import url(http://fonts.googleapis.com/css?family=News+Cycle:400,700);
+
+body {
+  background: #e8e8e8;
+  font-family: "News Cycle", sans-serif;
+}
+
+input {
+  font-family: "News Cycle", sans-serif;
+}
+
+textarea {
+  font-family: "News Cycle", sans-serif;
+  font-size: 20px;
+  overflow: auto;
+  resize: none;
+}
+
+textarea:focus, input:focus {
+  outline: none;
+}
+
+.wrapper {
+  width: 320px; 
+  height: 420px;
+  padding-bottom: 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -160px;
+  margin-top: -215px;
+  background: white;
+  border-radius: 4px;
+  border: 1px solid #dbd9d9;
+}
+
+.wrapper .form-header {
+  font-weight: 400;
+  text-align: center;
+  padding: 10px;
+  background: #efb364;
+  color: white;
+}
+
+.wrapper .report-form {
+  padding: 0px 10px;
+  position: relative;
+}
+
+.wrapper .report-form textarea {
+  width: 300px;
+  border: none;
+  color: #444;
+}
+
+.wrapper .formfeedback {
+  position: absolute;
+  top: -300px;
+}
+
+input#submit {
+  background: #efb364;
+  width: 300px;
+  padding: 5px 0;
+  margin: 0;
+  border: 1px solid #C98D3F;
+  color: white;
+  font-size: 24px;
+  font-weight: 700;
+  border-radius: 2px;
+  cursor: pointer;
+  -webkit-transition: 0.2s;
+  -moz-transition: 0.2s;
+  transition: 0.2s;
+}
+
+input#submit:hover {
+  background: #ef9f37;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  padding: 20px 0;
+  text-align: center;
+  width: 800px;
+  left: 50%;
+  margin-left: -400px;
+}
+
+.footer .blurb {
+  margin-bottom: 10px;
+}
+
+.footer a {
+  margin: 0 10px;
+}
