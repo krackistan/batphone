@@ -22,8 +22,8 @@ function print_form(){
 	<input name="subject" id="subject" type="text" class="field" value="<?= $_SESSION['bpForm']['subject']; ?>" tabindex="3"/></p>
   -->	
 
-	<textarea name="comments" id="comments" rows="7" cols="10" class="field" tabindex="2" placeholder="Enter your message here"><?= $_SESSION['bpForm']['comments']; ?></textarea></p>
-	
+	<textarea name="comments" id="comments" rows="6" cols="10" class="field" tabindex="2" maxlength="160" placeholder="Enter your message here"><?= $_SESSION['bpForm']['comments']; ?></textarea></p>
+
   <!-- remove mms image uploads for now
   <p><label for="attachment">File Upload<br />(1 file only, max file size 1024kb.)</label>
 	<input name="attachment" id="attachment" type="file" tabindex="5">

@@ -35,15 +35,30 @@ $_SESSION['myForm'] = $_POST;
     	  print_form(); 
 	  }
 	  ?>
-  </div>	
+  </div>
+  <div id="textarea_feedback"></div>	
 </div>
 <div class="footer">
-  <span class="blurb">BatPhone is a web interface for contacting house level managers at Casa Zimbabwe via SMS.</span>
+  <span class="blurb">BatPhone is a web-to-SMS interface for anonymously contacting house level managers at Casa Zimbabwe</span>
   <br>
   <a href="https://github.com/krackistan/batphone">Source</a>
   <a href="https://github.com/krackistan/batphone/issues">Bug Reports</a>
   <a href="mailto:tc@ischool.berkeley.edu">Help</a>
 </div>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#textarea_feedback').html('0/160');
+
+    $('textarea').keyup(function() {
+        var text_length = $('textarea').val().length;
+
+        $('#textarea_feedback').html(text_length + '/160');
+    });
+});
+</script>
+
 </body>
 </html>
 <?php session_destroy(); //unset session data ?>

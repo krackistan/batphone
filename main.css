@@ -11,7 +11,7 @@ input {
 
 textarea {
   font-family: "News Cycle", sans-serif;
-  font-size: 20px;
+  font-size: 24px;
   overflow: auto;
   resize: none;
 }
@@ -43,14 +43,22 @@ textarea:focus, input:focus {
 }
 
 .wrapper .report-form {
-  padding: 0px 10px;
+  padding: 0px 20px;
   position: relative;
 }
 
 .wrapper .report-form textarea {
-  width: 300px;
+  width: 280px;
   border: none;
   color: #444;
+}
+
+#textarea_feedback {
+  position: absolute;
+  bottom: -20px;
+  right: 10px;
+  bottom: -35px;
+  color: #999;
 }
 
 .wrapper .formfeedback {
@@ -60,7 +68,7 @@ textarea:focus, input:focus {
 
 input#submit {
   background: #efb364;
-  width: 300px;
+  width: 280px;
   padding: 5px 0;
   margin: 0;
   border: 1px solid #C98D3F;
